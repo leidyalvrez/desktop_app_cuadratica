@@ -70,18 +70,18 @@ def resolver():
         x2 = (-val_b - math.sqrt(d)) / (2 * val_a)
         t_resultados.insert(
             INSERT,
-            f"Ecuación: {val_a}x² + {val_b}x + {val_c} = 0\n"
+            f"Ecuación: {val_a}x² + {val_b}x + {val_c} = 0\n\n"
             f"Dos soluciones reales:\n"
-            f"x1 = {round(x1, 2)}\n"
-            f"x2 = {round(x2, 2)}\n",
+            f"  • x1 = {round(x1, 2)}\n"
+            f"  • x2 = {round(x2, 2)}\n",
         )
     elif d == 0:
         x = -val_b / (2 * val_a)
         t_resultados.insert(
             INSERT,
-            f"Ecuación: {val_a}x² + {val_b}x + {val_c} = 0\n"
+            f"Ecuación: {val_a}x² + {val_b}x + {val_c} = 0\n\n"
             f"Una solución real única:\n"
-            f"x = {round(x, 2)}\n",
+            f"  • x = {round(x, 2)}\n",
         )
     else:
         # Raíces complejas (imaginarias)
@@ -89,10 +89,10 @@ def resolver():
         parte_imag = math.sqrt(-d) / (2 * val_a)
         t_resultados.insert(
             INSERT,
-            f"Ecuación: {val_a}x² + {val_b}x + {val_c} = 0\n"
+            f"Ecuación: {val_a}x² + {val_b}x + {val_c} = 0\n\n"
             f"Soluciones complejas (imaginarias):\n"
-            f"x1 = {round(parte_real, 2)} + {round(abs(parte_imag), 2)}i\n"
-            f"x2 = {round(parte_real, 2)} - {round(abs(parte_imag), 2)}i\n",
+            f"  • x1 = {round(parte_real, 2)} + {round(abs(parte_imag), 2)}i\n"
+            f"  • x2 = {round(parte_real, 2)} - {round(abs(parte_imag), 2)}i\n",
         )
 
 
@@ -102,8 +102,16 @@ def resolver():
 ventana_principal = Tk()
 ventana_principal.title("Sistemas Guanentá - Ecuación Cuadrática")
 ventana_principal.geometry("500x520")
-ventana_principal.config(bg="black")
+ventana_principal.config(bg="#1e1e1e")  # Fondo modo oscuro profundo
 ventana_principal.resizable(0, 0)
+
+# Cargar icono (.ico) de la ventana si existe
+ruta_icono = "icono.ico"
+if os.path.exists(ruta_icono):
+    try:
+        ventana_principal.iconbitmap(ruta_icono)
+    except Exception as e:
+        print(f"No se pudo cargar el icono: {e}")
 
 # ------------------------------------------
 # Variables globales de la app
@@ -115,45 +123,95 @@ c = StringVar()
 # ------------------------------------------
 # Frame 1: Entrada de datos
 # ------------------------------------------
-frame_entrada = Frame(ventana_principal)
-frame_entrada.config(bg="white", width=480, height=240)
+frame_entrada = Frame(
+    ventana_principal, bg="#2d2d2d", bd=1, relief="solid", width=480, height=240
+)
 frame_entrada.place(x=10, y=10)
 
 # Título de la app
-titulo = Label(frame_entrada, text="Ecuación: ax² + bx + c = 0")
-titulo.config(bg="lightblue", fg="blue", font=("Arial", 16, "bold"))
+titulo = Label(
+    frame_entrada,
+    text="Ecuación: ax² + bx + c = 0",
+    bg="#2d2d2d",
+    fg="#60a5fa",
+    font=("Segoe UI", 15, "bold"),
+)
 titulo.place(x=100, y=15)
 
-aviso = Label(frame_entrada, text="Ingrese los coeficientes a, b y c:")
-aviso.config(bg="lightblue", fg="blue", font=("Arial", 11))
+aviso = Label(
+    frame_entrada,
+    text="Ingrese los coeficientes a, b y c:",
+    bg="#2d2d2d",
+    fg="#a1a1aa",
+    font=("Segoe UI", 10),
+)
 aviso.place(x=120, y=50)
 
 # Entrada Coeficiente A
-lb_a = Label(frame_entrada, text="a =")
-lb_a.config(bg="lightblue", fg="blue", font=("Arial", 14))
+lb_a = Label(
+    frame_entrada,
+    text="a =",
+    bg="#2d2d2d",
+    fg="#ffffff",
+    font=("Segoe UI", 12, "bold"),
+)
 lb_a.place(x=60, y=90)
 
-entry_a = Entry(frame_entrada, textvariable=a)
-entry_a.config(bg="white", fg="black", font=("Times New Roman", 14))
+entry_a = Entry(
+    frame_entrada,
+    textvariable=a,
+    bg="#3f3f46",
+    fg="#ffffff",
+    insertbackground="white",
+    font=("Segoe UI", 12),
+    bd=1,
+    relief="solid",
+)
 entry_a.focus_set()
 entry_a.place(x=110, y=90, width=120, height=30)
 
 # Entrada Coeficiente B
-lb_b = Label(frame_entrada, text="b =")
-lb_b.config(bg="lightblue", fg="blue", font=("Arial", 14))
+lb_b = Label(
+    frame_entrada,
+    text="b =",
+    bg="#2d2d2d",
+    fg="#ffffff",
+    font=("Segoe UI", 12, "bold"),
+)
 lb_b.place(x=60, y=135)
 
-entry_b = Entry(frame_entrada, textvariable=b)
-entry_b.config(bg="white", fg="black", font=("Times New Roman", 14))
+entry_b = Entry(
+    frame_entrada,
+    textvariable=b,
+    bg="#3f3f46",
+    fg="#ffffff",
+    insertbackground="white",
+    font=("Segoe UI", 12),
+    bd=1,
+    relief="solid",
+)
 entry_b.place(x=110, y=135, width=120, height=30)
 
 # Entrada Coeficiente C
-lb_c = Label(frame_entrada, text="c =")
-lb_c.config(bg="lightblue", fg="blue", font=("Arial", 14))
+lb_c = Label(
+    frame_entrada,
+    text="c =",
+    bg="#2d2d2d",
+    fg="#ffffff",
+    font=("Segoe UI", 12, "bold"),
+)
 lb_c.place(x=60, y=180)
 
-entry_c = Entry(frame_entrada, textvariable=c)
-entry_c.config(bg="white", fg="black", font=("Times New Roman", 14))
+entry_c = Entry(
+    frame_entrada,
+    textvariable=c,
+    bg="#3f3f46",
+    fg="#ffffff",
+    insertbackground="white",
+    font=("Segoe UI", 12),
+    bd=1,
+    relief="solid",
+)
 entry_c.place(x=110, y=180, width=120, height=30)
 
 # ------------------------------------------
@@ -173,7 +231,7 @@ if os.path.exists(ruta_imagen):
             img_logo = PhotoImage(file=ruta_imagen)
 
         # Mostrar la imagen a la derecha de las entradas de texto
-        lb_imagen = Label(frame_entrada, image=img_logo, bg="white")
+        lb_imagen = Label(frame_entrada, image=img_logo, bg="#2d2d2d")
         lb_imagen.place(x=260, y=90)
     except Exception as e:
         print(f"Error cargando la imagen: {e}")
@@ -181,32 +239,75 @@ if os.path.exists(ruta_imagen):
 # ------------------------------------------
 # Frame 2: Operaciones (Botones)
 # ------------------------------------------
-frame_operaciones = Frame(ventana_principal)
-frame_operaciones.config(bg="white", width=480, height=90)
+frame_operaciones = Frame(
+    ventana_principal, bg="#2d2d2d", bd=1, relief="solid", width=480, height=90
+)
 frame_operaciones.place(x=10, y=260)
 
 # Botón para Resolver
-bt_resolver = Button(frame_operaciones, text="Resolver", command=resolver)
-bt_resolver.place(x=45, y=30, width=100, height=30)
+bt_resolver = Button(
+    frame_operaciones,
+    text="Resolver",
+    command=resolver,
+    bg="#2563eb",
+    fg="white",
+    font=("Segoe UI", 10, "bold"),
+    bd=0,
+    cursor="hand2",
+    activebackground="#1d4ed8",
+    activeforeground="white",
+)
+bt_resolver.place(x=45, y=30, width=100, height=32)
 
 # Botón para Borrar
-bt_borrar = Button(frame_operaciones, text="Borrar", command=borrar)
-bt_borrar.place(x=180, y=30, width=100, height=30)
+bt_borrar = Button(
+    frame_operaciones,
+    text="Borrar",
+    command=borrar,
+    bg="#4b5563",
+    fg="white",
+    font=("Segoe UI", 10, "bold"),
+    bd=0,
+    cursor="hand2",
+    activebackground="#374151",
+    activeforeground="white",
+)
+bt_borrar.place(x=180, y=30, width=100, height=32)
 
 # Botón para Salir
-bt_salir = Button(frame_operaciones, text="Salir", command=salir)
-bt_salir.place(x=315, y=30, width=100, height=30)
+bt_salir = Button(
+    frame_operaciones,
+    text="Salir",
+    command=salir,
+    bg="#dc2626",
+    fg="white",
+    font=("Segoe UI", 10, "bold"),
+    bd=0,
+    cursor="hand2",
+    activebackground="#b91c1c",
+    activeforeground="white",
+)
+bt_salir.place(x=315, y=30, width=100, height=32)
 
 # ------------------------------------------
 # Frame 3: Resultados
 # ------------------------------------------
-frame_resultados = Frame(ventana_principal)
-frame_resultados.config(bg="white", width=480, height=140)
+frame_resultados = Frame(
+    ventana_principal, bg="#2d2d2d", bd=1, relief="solid", width=480, height=140
+)
 frame_resultados.place(x=10, y=360)
 
 # Área de texto para mostrar las raíces x1 y x2
-t_resultados = Text(frame_resultados)
-t_resultados.config(bg="white", fg="black", font=("Arial", 12))
+t_resultados = Text(
+    frame_resultados,
+    bg="#18181b",
+    fg="#38bdf8",
+    insertbackground="white",
+    font=("Consolas", 11),
+    bd=0,
+    padx=10,
+    pady=10,
+)
 t_resultados.place(x=10, y=10, width=460, height=120)
 
 # Bucle principal
